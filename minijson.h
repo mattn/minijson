@@ -175,7 +175,7 @@ public:
       if (*p == '\n') ss << "\\n";
       if (*p == '\r') ss << "\\r";
       if (*p == '\t') ss << "\\t";
-      else if (strchr("\"'", *p)) ss << "\\" << *p;
+      else if (strchr("\"", *p)) ss << "\\" << *p;
       else ss << *p;
       p++;
     }
@@ -375,6 +375,8 @@ parse_number(Iter& i, value& v) {
 template<typename Iter>
 inline error
 parse_string(Iter& i, value& v) {
+  if (*i != '"') return invalid_token_error;
+
   char t = *i++;
   Iter p = i;
   std::stringstream ss;
@@ -410,7 +412,7 @@ parse_any(Iter& i, value& v) {
   if (*i == 't' || *i == 'f') return parse_boolean(i, v);
   if (*i == 'n') return parse_null(i, v);
   if ('0' <= *i && *i <= '9') return parse_number(i, v);
-  if (*i == '\'' || *i == '"') return parse_string(i, v);
+  if (*i == '"') return parse_string(i, v);
   return invalid_token_error;
 }
 #undef _MINIJSON_SKIP
