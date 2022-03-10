@@ -415,13 +415,19 @@ parse_any(Iter& i, value& v) {
   if (*i == '"') return parse_string(i, v);
   return invalid_token_error;
 }
-#undef _MINIJSON_SKIP
 
 template<typename Iter>
 inline error
 parse(Iter& i, value& v) {
-  return parse_any(i, v);
+  error e = parse_any(i, v);
+  if (e == no_error) {
+    _MINIJSON_SKIP(i);
+    if (*i) return invalid_token_error;
+  }
+  return e;
 }
+
+#undef _MINIJSON_SKIP
 
 inline const char*
 errstr(error e) {
