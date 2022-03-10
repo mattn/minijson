@@ -234,7 +234,7 @@ public:
   }
 };
 
-#define _MINIJSON_SKIP(i) while (strchr("\r\n \t", *i)) { i++; }
+#define _MINIJSON_SKIP(i) while (*i && strchr("\r\n \t", *i)) { i++; }
 
 template<typename Iter>
 inline error
@@ -419,12 +419,7 @@ parse_any(Iter& i, value& v) {
 template<typename Iter>
 inline error
 parse(Iter& i, value& v) {
-  error e = parse_any(i, v);
-  if (e == no_error) {
-    _MINIJSON_SKIP(i);
-    if (*i) return invalid_token_error;
-  }
-  return e;
+  return parse_any(i, v);
 }
 
 #undef _MINIJSON_SKIP
