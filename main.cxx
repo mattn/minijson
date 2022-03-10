@@ -6,9 +6,17 @@ using namespace minijson;
 int
 main(int /*argc*/, char* /*argv*/[]) {
 #ifdef __MINIJSON_LIBERAL
-  const char* foo = "{'empty':{'':[]}, 'foo':\n3.2, 'bar': 'baz', 'baz': true,'hoge':{'a':'あい\\nうお\\2え'}, 'moge': null, 'zz': 0xff\n, 'rrr':[[2,'3'], '4'], 'fuba': 1e9,}";
+  const char* foo = R"(
+{'empty':{"":[]}, "foo":
+3.2, "bar": "baz", "baz": true,"hoge":{"a":"あい\nうお\2え"}, "moge": null, "zz": 0xff
+, "rrr":[[2,"3"], "4"], "fuba": 1e9,}
+)";
 #else
-  const char* foo = "{'empty':{'':[]}, 'foo':\n3.2, 'bar': 'baz', 'baz': true,'hoge':{'a':'あい\\nうお\\2え'}, 'moge': null, 'zz': 0xff\n, 'rrr':[[2,'3'], '4'], 'fuba': 1e9}";
+  const char* foo = R"(
+{"empty":{"":[]}, "foo":
+3.2, "bar": "baz", "baz": true,"hoge":{"a":"あい\nうお\2え"}, "moge": null, "zz": 0xff
+, "rrr":[[2,"3"], "4"], "fuba": 1e9}
+)";
 #endif
   const char* p = foo;
   value v;
