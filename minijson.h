@@ -309,7 +309,7 @@ parse_null(Iter& i, value& v) {
     i += 4;
     v = null;
   }
-  if (*i && NULL == strchr(":,\x7d]\r\n ", *i)) {
+  if (*i && nullptr == strchr(":,\x7d]\r\n ", *i)) {
     i = p;
     return undefined_error;
   }
@@ -327,7 +327,7 @@ parse_boolean(Iter& i, value& v) {
     i += 5;
     v = (boolean) false;
   }
-  if (*i && NULL == strchr(":,\x7d]\r\n ", *i)) {
+  if (*i && nullptr == strchr(":,\x7d]\r\n ", *i)) {
     i = p;
     return undefined_error;
   }
@@ -344,7 +344,7 @@ parse_number(Iter& i, value& v) {
   if (*i == '0' && *(i + 1) == 'x' && _IS_ALNUM(*(i+2))) {
     i += 3;
     while (_IS_ALNUM(*i)) i++;
-    v = (number) strtod(p, NULL);
+    v = (number) strtod(p, nullptr);
   } else {
     while (_IS_NUM(*i)) i++;
     if (*i == '.') {
@@ -363,9 +363,9 @@ parse_number(Iter& i, value& v) {
       }
       while (_IS_NUM(*i)) i++;
     }
-    v = (number) strtod(p, NULL);
+    v = (number) strtod(p, nullptr);
   }
-  if (*i && NULL == strchr(":,\x7d]\r\n ", *i)) {
+  if (*i && nullptr == strchr(":,\x7d]\r\n ", *i)) {
     i = p;
     return invalid_token_error;
   }
@@ -396,7 +396,7 @@ parse_string(Iter& i, value& v) {
   if (!*i) return invalid_token_error;
   v = std::string(p, i-p);
   i++;
-  if (*i && NULL == strchr(":,\x7d]\r\n ", *i)) {
+  if (*i && nullptr == strchr(":,\x7d]\r\n ", *i)) {
     i = p;
     return invalid_token_error;
   }
